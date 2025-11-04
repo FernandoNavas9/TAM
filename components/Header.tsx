@@ -11,7 +11,7 @@ const Header: React.FC<HeaderProps> = ({ toggleSidebar, navItems }) => {
     <header className="bg-white/80 backdrop-blur-md shadow-md sticky top-0 z-40">
       <div className="container mx-auto px-6 py-4 flex justify-between items-center">
         <a href="/#inicio" className="flex items-center gap-3 text-tam-blue hover:opacity-80 transition-opacity">
-          <TamLogo />
+          <img src="/assets/logo.png" alt="TAM Logo" className="h-10 w-10" />
           <span className="text-2xl font-bold tracking-wider">TAM</span>
         </a>
         <nav className="hidden md:flex space-x-8">
