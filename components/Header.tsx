@@ -13,7 +13,7 @@ const Header: React.FC<HeaderProps> = ({ toggleSidebar, navItems }) => {
       <div className="container mx-auto px-6 py-4 flex justify-between items-center">
         <a href="/#inicio" className="flex items-center gap-3 text-tam-blue hover:opacity-80 transition-opacity">
           <img src={logoImage} alt="TAM Logo" className="h-10 w-10" />
-          <span className="text-2xl font-bold tracking-wider">TAM</span>
+          <span className="text-2xl font-bold tracking-wider">Tecnologías Avanzadas de México</span>
         </a>
         <nav className="hidden md:flex space-x-8">
           {navItems.map((item) => (
