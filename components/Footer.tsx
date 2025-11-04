@@ -1,6 +1,5 @@
-
 import React from 'react';
-import { FacebookIcon, InstagramIcon, TamLogo } from './Icons';
+import { FacebookIcon, InstagramIcon } from './Icons';
 
 const Footer: React.FC = () => {
   return (
@@ -9,7 +8,7 @@ const Footer: React.FC = () => {
         <div className="flex flex-col md:flex-row justify-between items-center text-center md:text-left">
           <div className="mb-8 md:mb-0">
             <div className="flex items-center justify-center md:justify-start gap-3 mb-4">
-              <TamLogo isWhite={true} />
+              <img src="/assets/logo.png" alt="TAM Logo" className="h-10 w-10 bg-white rounded-md p-1" />
               <span className="text-2xl font-bold">TAM</span>
             </div>
             <p className="text-slate-400">Tecnologías Avanzadas de México</p>

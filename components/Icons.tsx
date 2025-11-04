@@ -54,11 +54,4 @@ export const ArrowLeftIcon: React.FC = () => (
     </svg>
 );
 
-export const TamLogo: React.FC<{isWhite?: boolean}> = ({ isWhite = false }) => (
-    <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <rect width="40" height="40" rx="8" fill={isWhite ? 'white' : '#0D47A1'}/>
-        <path d="M10 12H15.5L20 28L24.5 12H30" stroke={isWhite ? '#0D47A1' : 'white'} strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"/>
-    </svg>
-);
-
 export default MenuIcon;

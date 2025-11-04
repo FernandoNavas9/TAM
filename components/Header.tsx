@@ -1,5 +1,5 @@
 import React from 'react';
-import { MenuIcon, TamLogo } from './Icons';
+import { MenuIcon } from './Icons';
 
 interface HeaderProps {
   toggleSidebar: () => void;
