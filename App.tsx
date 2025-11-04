@@ -7,7 +7,49 @@ import { BuildingIcon, CodeIcon, FactoryIcon, MailIcon } from './components/Icon
 import heroBackgroundImage from './assets/hero-background.png';
 import aboutUsImage from './assets/about-us-team.png';
 
-const MainContent: React.FC = () => (
+const MainContent: React.FC = () => {
+    const [formData, setFormData] = useState({
+        name: '',
+        company: '',
+        email: '',
+        message: ''
+    });
+    const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+        const { id, value } = e.target;
+        setFormData(prev => ({ ...prev, [id]: value }));
+    };
+
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        setStatus('submitting');
+        try {
+            const response = await fetch('https://formsubmit.co/ajax/navasfernando6@gmail.com', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify({
+                    ...formData,
+                    _subject: `Nuevo mensaje de contacto de: ${formData.name}`,
+                }),
+            });
+
+            if (response.ok) {
+                setStatus('success');
+                setFormData({ name: '', company: '', email: '', message: '' });
+            } else {
+                throw new Error('Form submission failed');
+            }
+        } catch (error) {
+            console.error(error);
+            setStatus('error');
+        }
+    };
+    
+    return (
   <>
     {/* Hero Section */}
     <section id="inicio" className="relative h-[60vh] md:h-[80vh] flex items-center justify-center text-white bg-cover bg-center" style={{ backgroundImage: `url(${heroBackgroundImage})` }}>
@@ -90,37 +132,47 @@ const MainContent: React.FC = () => (
           <p className="mt-4 text-lg text-slate-600">¿Listo para transformar su negocio? Hablemos.</p>
         </div>
         <div className="max-w-3xl mx-auto bg-white p-8 rounded-lg shadow-lg">
-          <form>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-              <div>
-                <label htmlFor="name" className="block text-slate-700 font-medium mb-2">Nombre</label>
-                <input type="text" id="name" className="w-full px-4 py-2 border border-slate-300 rounded-md focus:ring-tam-light-blue focus:border-tam-light-blue transition" placeholder="Su nombre" />
+          {status === 'success' ? (
+            <div className="text-center py-8">
+              <h3 className="text-2xl font-bold text-green-600 mb-2">¡Mensaje Enviado!</h3>
+              <p className="text-slate-600">Gracias por contactarnos. Le responderemos a la brevedad.</p>
+            </div>
+          ) : (
+            <form onSubmit={handleSubmit}>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                <div>
+                  <label htmlFor="name" className="block text-slate-700 font-medium mb-2">Nombre</label>
+                  <input type="text" id="name" name="name" value={formData.name} onChange={handleChange} required className="w-full px-4 py-2 border border-slate-300 rounded-md focus:ring-tam-light-blue focus:border-tam-light-blue transition" placeholder="Su nombre" />
+                </div>
+                <div>
+                  <label htmlFor="company" className="block text-slate-700 font-medium mb-2">Empresa</label>
+                  <input type="text" id="company" name="company" value={formData.company} onChange={handleChange} className="w-full px-4 py-2 border border-slate-300 rounded-md focus:ring-tam-light-blue focus:border-tam-light-blue transition" placeholder="Nombre de su empresa" />
+                </div>
               </div>
-              <div>
-                <label htmlFor="company" className="block text-slate-700 font-medium mb-2">Empresa</label>
-                <input type="text" id="company" className="w-full px-4 py-2 border border-slate-300 rounded-md focus:ring-tam-light-blue focus:border-tam-light-blue transition" placeholder="Nombre de su empresa" />
+              <div className="mb-6">
+                <label htmlFor="email" className="block text-slate-700 font-medium mb-2">Email</label>
+                <input type="email" id="email" name="email" value={formData.email} onChange={handleChange} required className="w-full px-4 py-2 border border-slate-300 rounded-md focus:ring-tam-light-blue focus:border-tam-light-blue transition" placeholder="su.email@ejemplo.com" />
               </div>
-            </div>
-            <div className="mb-6">
-              <label htmlFor="email" className="block text-slate-700 font-medium mb-2">Email</label>
-              <input type="email" id="email" className="w-full px-4 py-2 border border-slate-300 rounded-md focus:ring-tam-light-blue focus:border-tam-light-blue transition" placeholder="su.email@ejemplo.com" />
-            </div>
-            <div className="mb-6">
-              <label htmlFor="message" className="block text-slate-700 font-medium mb-2">Mensaje</label>
-              <textarea id="message" rows={5} className="w-full px-4 py-2 border border-slate-300 rounded-md focus:ring-tam-light-blue focus:border-tam-light-blue transition" placeholder="¿Cómo podemos ayudarle?"></textarea>
-            </div>
-            <div className="text-center">
-              <button type="submit" className="bg-tam-blue text-white font-bold py-3 px-8 rounded-lg hover:bg-tam-light-blue transition-colors duration-300 flex items-center justify-center gap-2 mx-auto">
-                <MailIcon />
-                Enviar Mensaje
-              </button>
-            </div>
-          </form>
+              <div className="mb-6">
+                <label htmlFor="message" className="block text-slate-700 font-medium mb-2">Mensaje</label>
+                <textarea id="message" name="message" rows={5} value={formData.message} onChange={handleChange} required className="w-full px-4 py-2 border border-slate-300 rounded-md focus:ring-tam-light-blue focus:border-tam-light-blue transition" placeholder="¿Cómo podemos ayudarle?"></textarea>
+              </div>
+              <div className="text-center">
+                <button type="submit" disabled={status === 'submitting'} className="bg-tam-blue text-white font-bold py-3 px-8 rounded-lg hover:bg-tam-light-blue transition-colors duration-300 flex items-center justify-center gap-2 mx-auto disabled:bg-slate-400">
+                  <MailIcon />
+                  {status === 'submitting' ? 'Enviando...' : 'Enviar Mensaje'}
+                </button>
+              </div>
+              {status === 'error' && (
+                <p className="text-center text-red-500 mt-4">Hubo un error al enviar el mensaje. Por favor, inténtelo de nuevo.</p>
+              )}
+            </form>
+          )}
         </div>
       </div>
     </section>
   </>
-);
+)};
 
 
 const App: React.FC = () => {
