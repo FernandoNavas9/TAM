@@ -13,7 +13,7 @@ const Footer: React.FC = () => {
               <span className="text-2xl font-bold">TAM</span>
             </div>
             <p className="text-slate-400">Tecnologías Avanzadas de México</p>
-            <p className="text-slate-400">Av. de la Innovación 123, C.P. 12345, Ciudad de México</p>
+            <p className="text-slate-400">Cuautitlán Izcalli, C.P. 54750, Estado de México, México.</p>
           </div>
           <div>
             <p className="font-semibold mb-4">Síganos en redes</p>
