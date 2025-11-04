@@ -4,11 +4,13 @@ import Sidebar from './components/Sidebar';
 import Footer from './components/Footer';
 import BmsPage from './BmsPage';
 import { BuildingIcon, CodeIcon, FactoryIcon, MailIcon } from './components/Icons';
+import heroBackgroundImage from './assets/hero-background.png';
+import aboutUsImage from './assets/about-us-team.png';
 
 const MainContent: React.FC = () => (
   <>
     {/* Hero Section */}
-    <section id="inicio" className="relative h-[60vh] md:h-[80vh] flex items-center justify-center text-white bg-cover bg-center" style={{ backgroundImage: `url('assets/hero-background.png')` }}>
+    <section id="inicio" className="relative h-[60vh] md:h-[80vh] flex items-center justify-center text-white bg-cover bg-center" style={{ backgroundImage: `url(${heroBackgroundImage})` }}>
         <div className="absolute inset-0 bg-tam-blue bg-opacity-70"></div>
         <div className="relative z-10 text-center px-4">
             <h1 className="text-4xl md:text-6xl font-bold mb-4 tracking-tight">Tecnologías Avanzadas de México</h1>
@@ -66,7 +68,7 @@ const MainContent: React.FC = () => (
     <section id="nosotros" className="py-16 md:py-24 bg-white">
       <div className="container mx-auto px-6 flex flex-col md:flex-row items-center gap-12">
         <div className="md:w-1/2">
-            <img src="assets/about-us-team.png" alt="Equipo de TAM" className="rounded-lg shadow-2xl" />
+            <img src={aboutUsImage} alt="Equipo de TAM" className="rounded-lg shadow-2xl" />
         </div>
         <div className="md:w-1/2">
             <h2 className="text-3xl md:text-4xl font-bold text-tam-blue mb-4">Sobre TAM</h2>
