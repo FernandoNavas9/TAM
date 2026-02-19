@@ -115,7 +115,7 @@ const MainContent: React.FC = () => {
         <div className="md:w-1/2">
             <h2 className="text-3xl md:text-4xl font-bold text-tam-blue mb-4">Sobre TAM</h2>
             <p className="text-slate-600 text-lg mb-4">
-                En Tecnologías Avanzadas de México (TAM), somos pioneros en la integración de soluciones de automatización. Nuestra misión es impulsar la eficiencia, sostenibilidad y productividad de nuestros clientes a través de tecnología de punta y un servicio de excelencia.
+                En Tecnologías Avanzadas de México (TAM), somos especialistas en la integración de soluciones de automatización. Nuestra misión es impulsar la eficiencia, sostenibilidad y productividad de nuestros clientes a través de tecnología de punta y un servicio de excelencia.
             </p>
             <p className="text-slate-600 text-lg">
                 Con un equipo de ingenieros y desarrolladores altamente calificados, abordamos cada proyecto con un enfoque consultivo, entendiendo a fondo los desafíos para diseñar la solución más efectiva y rentable.
