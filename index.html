@@ -1,36 +1,454 @@
 <!DOCTYPE html>
 <html lang="es" class="scroll-smooth">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/png" href="assets/logo.png" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TAM - Tecnologías Avanzadas de México</title>
+    <!-- Tailwind CSS para los estilos -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
-      tailwind.config = {
-        theme: {
-          extend: {
-            colors: {
-              'tam-blue': '#0D47A1',
-              'tam-light-blue': '#1976D2',
-              'tam-gray': '#f8fafc',
-            },
-          }
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        tam: {
+                            blue: '#0a2540',
+                            light: '#1e3a8a',
+                            accent: '#38bdf8'
+                        }
+                    }
+                }
+            }
         }
-      }
     </script>
-  <script type="importmap">
-{
-  "imports": {
-    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
-    "react/": "https://aistudiocdn.com/react@^19.2.0/",
-    "react": "https://aistudiocdn.com/react@^19.2.0"
-  }
-}
-</script>
+    <style>
+        /* Ocultar barra de desplazamiento en el body cuando el modal está abierto */
+        body.modal-open { overflow: hidden; }
+        
+        /* Estilos del carrusel */
+        .carousel-track {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+        }
+        .carousel-item {
+            min-width: 100%;
+            flex-shrink: 0;
+        }
+    </style>
 </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/index.tsx"></script>
-  </body>
+<body class="bg-gray-50 text-gray-800 font-sans antialiased">
+
+    <!-- Navegación -->
+    <nav class="bg-white shadow-md fixed w-full z-40 top-0">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-20 items-center">
+                <div class="flex items-center">
+                    <span class="font-extrabold text-3xl text-tam-blue tracking-tighter">TAM<span class="text-tam-accent">.</span></span>
+                </div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="#inicio" class="text-gray-600 hover:text-tam-light font-medium transition">Inicio</a>
+                    <a href="#nosotros" class="text-gray-600 hover:text-tam-light font-medium transition">Sobre Nosotros</a>
+                    <a href="#servicios" class="text-gray-600 hover:text-tam-light font-medium transition">Servicios</a>
+                    <a href="#proyectos" class="text-gray-600 hover:text-tam-light font-medium transition">Proyectos</a>
+                    <a href="#contacto" class="text-gray-600 hover:text-tam-light font-medium transition">Contacto</a>
+                </div>
+                <!-- Botón móvil (simplificado) -->
+                <div class="md:hidden flex items-center">
+                    <button class="text-gray-600 hover:text-tam-blue focus:outline-none">
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Header / Hero Section -->
+    <header id="inicio" class="relative pt-20 pb-32 lg:pt-32 lg:pb-40 bg-tam-blue overflow-hidden">
+        <div class="absolute inset-0">
+            <img src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80" alt="Fondo Industrial" class="w-full h-full object-cover opacity-20">
+            <div class="absolute inset-0 bg-gradient-to-r from-tam-blue via-tam-blue/90 to-transparent"></div>
+        </div>
+        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center lg:text-left flex flex-col lg:flex-row items-center">
+            <div class="lg:w-2/3">
+                <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-white leading-tight mb-6">
+                    Tecnologías Avanzadas de México
+                </h1>
+                <p class="mt-4 text-xl text-gray-300 max-w-2xl mx-auto lg:mx-0 mb-10">
+                    Especialistas en la integración de soluciones de automatización y control. Impulsamos la eficiencia, seguridad y productividad de tus instalaciones a través de tecnología a la medida.
+                </p>
+                <div class="flex flex-col sm:flex-row justify-center lg:justify-start gap-4">
+                    <a href="#servicios" class="px-8 py-4 bg-tam-accent text-white rounded-lg font-bold shadow-lg hover:bg-sky-400 transition transform hover:-translate-y-1">Nuestros Servicios</a>
+                    <a href="#contacto" class="px-8 py-4 bg-transparent border-2 border-white text-white rounded-lg font-bold hover:bg-white hover:text-tam-blue transition">Contáctanos</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Sobre Nosotros -->
+    <section id="nosotros" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto">
+                <h2 class="text-base text-tam-accent font-semibold tracking-wide uppercase">Sobre TAM</h2>
+                <p class="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl">
+                    Excelencia en Automatización e Integración
+                </p>
+                <p class="mt-6 text-lg text-gray-500 leading-relaxed">
+                    Con sólida experiencia en control de edificios inteligentes (BMS), transición hacia la <strong>Industria 4.0</strong> y desarrollo de plataformas IT/OT personalizadas, nuestro equipo de ingenieros aborda cada proyecto con un enfoque consultivo. Entendemos a fondo tus procesos operativos para diseñar e implementar la solución tecnológica más efectiva, escalable y rentable para tu negocio.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Servicios Section con Modales -->
+    <section id="servicios" class="py-20 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-extrabold text-gray-900 sm:text-4xl">Soluciones a tu Medida</h2>
+                <p class="mt-4 text-lg text-gray-500">Haz clic en cada servicio para conocer nuestra profundidad técnica y alcance.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Tarjeta Servicio 1 -->
+                <div onclick="openModal('modal-bms')" class="bg-white rounded-2xl shadow-lg hover:shadow-2xl transition duration-300 transform hover:-translate-y-2 cursor-pointer border border-gray-100 p-8 flex flex-col h-full">
+                    <div class="w-14 h-14 bg-blue-100 text-tam-light rounded-lg flex items-center justify-center mb-6">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path></svg>
+                    </div>
+                    <h3 class="text-2xl font-bold text-gray-900 mb-3">Automatización de Edificios (BMS)</h3>
+                    <p class="text-gray-600 flex-grow">Gestión integral de Smart Buildings, controlando HVAC, iluminación, energía y seguridad bajo protocolos abiertos.</p>
+                    <div class="mt-6 text-tam-accent font-semibold flex items-center">
+                        Ver detalles técnicos <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                    </div>
+                </div>
+
+                <!-- Tarjeta Servicio 2 -->
+                <div onclick="openModal('modal-industrial')" class="bg-white rounded-2xl shadow-lg hover:shadow-2xl transition duration-300 transform hover:-translate-y-2 cursor-pointer border border-gray-100 p-8 flex flex-col h-full">
+                    <div class="w-14 h-14 bg-blue-100 text-tam-light rounded-lg flex items-center justify-center mb-6">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                    </div>
+                    <h3 class="text-2xl font-bold text-gray-900 mb-3">Industria 4.0 y Control Industrial</h3>
+                    <p class="text-gray-600 flex-grow">Transformación digital de piso de planta con IIoT, PLCs avanzados e integración IT/OT para fábricas inteligentes.</p>
+                    <div class="mt-6 text-tam-accent font-semibold flex items-center">
+                        Ver detalles técnicos <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                    </div>
+                </div>
+
+                <!-- Tarjeta Servicio 3 -->
+                <div onclick="openModal('modal-software')" class="bg-white rounded-2xl shadow-lg hover:shadow-2xl transition duration-300 transform hover:-translate-y-2 cursor-pointer border border-gray-100 p-8 flex flex-col h-full">
+                    <div class="w-14 h-14 bg-blue-100 text-tam-light rounded-lg flex items-center justify-center mb-6">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path></svg>
+                    </div>
+                    <h3 class="text-2xl font-bold text-gray-900 mb-3">Software a la Medida y SCADA</h3>
+                    <p class="text-gray-600 flex-grow">Desarrollo de interfaces HMI/SCADA, dashboards de KPI en tiempo real y sistemas de conectividad empresarial.</p>
+                    <div class="mt-6 text-tam-accent font-semibold flex items-center">
+                        Ver detalles técnicos <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Carrusel de Proyectos -->
+    <section id="proyectos" class="py-20 bg-tam-blue text-white overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-extrabold sm:text-4xl">Nuestros Proyectos</h2>
+                <p class="mt-4 text-lg text-gray-300">Un vistazo a nuestras implementaciones más recientes.</p>
+            </div>
+
+            <!-- Contenedor del Carrusel -->
+            <div class="relative max-w-5xl mx-auto rounded-2xl overflow-hidden shadow-2xl bg-gray-800">
+                <div id="carousel-track" class="carousel-track">
+                    
+                    <!-- FOTO 1 (AQUÍ PUEDES AGREGAR TU FOTO) -->
+                    <div class="carousel-item relative">
+                        <!-- Cambia la ruta en 'src' por tu propia imagen, ej: src="img/proyecto1.jpg" -->
+                        <img src="https://images.unsplash.com/photo-1581092160562-40aa08e78837?auto=format&fit=crop&w=1200&q=80" alt="Proyecto Industrial" class="w-full h-[400px] md:h-[500px] object-cover opacity-80">
+                        <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 to-transparent p-8">
+                            <h3 class="text-2xl font-bold">Líneas de Producción y Control de Procesos</h3>
+                            <p class="text-gray-300 mt-2">Programación de PLCs, pantallas HMI e integración de tableros de control para optimizar líneas de manufactura.</p>
+                        </div>
+                    </div>
+
+                    <!-- FOTO 2 (AQUÍ PUEDES AGREGAR TU FOTO) -->
+                    <div class="carousel-item relative">
+                        <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1200&q=80" alt="Edificio Inteligente" class="w-full h-[400px] md:h-[500px] object-cover opacity-80">
+                        <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 to-transparent p-8">
+                            <h3 class="text-2xl font-bold">Automatización BMS para Corporativos</h3>
+                            <p class="text-gray-300 mt-2">Integración de sistemas HVAC, control de iluminación y monitoreo de energía para máxima eficiencia operativa.</p>
+                        </div>
+                    </div>
+
+                    <!-- FOTO 3 (AQUÍ PUEDES AGREGAR TU FOTO) -->
+                    <div class="carousel-item relative">
+                        <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1200&q=80" alt="Dashboard de Software" class="w-full h-[400px] md:h-[500px] object-cover opacity-80">
+                        <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 to-transparent p-8">
+                            <h3 class="text-2xl font-bold">Desarrollo de Software SCADA y Dashboards</h3>
+                            <p class="text-gray-300 mt-2">Creación de plataformas a la medida para la visualización de datos en tiempo real y conectividad IT/OT multimarca.</p>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Botones del Carrusel -->
+                <button onclick="prevSlide()" class="absolute left-4 top-1/2 transform -translate-y-1/2 bg-black/50 hover:bg-black/80 text-white p-3 rounded-full transition z-10">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+                </button>
+                <button onclick="nextSlide()" class="absolute right-4 top-1/2 transform -translate-y-1/2 bg-black/50 hover:bg-black/80 text-white p-3 rounded-full transition z-10">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                </button>
+                
+                <!-- Indicadores (Puntitos) -->
+                <div class="absolute bottom-4 left-0 right-0 flex justify-center space-x-2 z-10" id="carousel-indicators">
+                    <div class="w-3 h-3 rounded-full bg-white transition-opacity cursor-pointer indicator-dot" onclick="goToSlide(0)"></div>
+                    <div class="w-3 h-3 rounded-full bg-white/50 transition-opacity cursor-pointer indicator-dot" onclick="goToSlide(1)"></div>
+                    <div class="w-3 h-3 rounded-full bg-white/50 transition-opacity cursor-pointer indicator-dot" onclick="goToSlide(2)"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contacto -->
+    <section id="contacto" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col lg:flex-row gap-16">
+            <div class="lg:w-1/2">
+                <h2 class="text-3xl font-extrabold text-gray-900 mb-6">¿Listo para transformar su negocio?</h2>
+                <p class="text-lg text-gray-600 mb-8">Hablemos. Llena el formulario y nuestro equipo de expertos se pondrá en contacto contigo a la brevedad.</p>
+                
+                <div class="flex items-start mb-6">
+                    <svg class="w-6 h-6 text-tam-accent mt-1 mr-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                    <div>
+                        <h4 class="font-bold text-gray-900">Ubicación</h4>
+                        <p class="text-gray-600">Cuautitlán Izcalli, C.P. 54750<br>Estado de México, México.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="lg:w-1/2 bg-gray-50 p-8 rounded-2xl shadow-sm border border-gray-100">
+                <form onsubmit="event.preventDefault(); showMessage('Mensaje enviado. Nos pondremos en contacto pronto.');" class="space-y-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Nombre</label>
+                            <input type="text" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-tam-accent focus:border-tam-accent outline-none transition" required>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Empresa</label>
+                            <input type="text" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-tam-accent focus:border-tam-accent outline-none transition" required>
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Email</label>
+                        <input type="email" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-tam-accent focus:border-tam-accent outline-none transition" required>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Mensaje</label>
+                        <textarea rows="4" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-tam-accent focus:border-tam-accent outline-none transition" required></textarea>
+                    </div>
+                    <button type="submit" class="w-full py-4 bg-tam-blue text-white rounded-lg font-bold hover:bg-tam-light transition shadow-lg">Enviar Mensaje</button>
+                    <!-- Contenedor para mostrar mensaje de éxito en vez de alert() -->
+                    <p id="form-msg" class="text-green-600 text-center font-medium hidden"></p>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-gray-900 py-10 border-t border-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <span class="font-extrabold text-2xl text-white tracking-tighter block mb-4">TAM<span class="text-tam-accent">.</span></span>
+            <p class="text-gray-400">&copy; 2026 Tecnologías Avanzadas de México. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <!-- ============================================== -->
+    <!-- ZONA DE MODALES (Ocultos por defecto)         -->
+    <!-- ============================================== -->
+
+    <!-- Modal BMS -->
+    <div id="modal-bms" class="modal-container fixed inset-0 z-50 hidden flex items-center justify-center">
+        <!-- Overlay oscuro -->
+        <div class="modal-overlay absolute inset-0 bg-black/60 backdrop-blur-sm cursor-pointer" onclick="closeModal('modal-bms')"></div>
+        <!-- Contenido del Modal -->
+        <div class="relative bg-white w-full max-w-4xl mx-4 rounded-2xl shadow-2xl p-8 transform transition-all max-h-[90vh] overflow-y-auto">
+            <button onclick="closeModal('modal-bms')" class="absolute top-4 right-4 text-gray-400 hover:text-gray-800 focus:outline-none bg-gray-100 rounded-full p-1">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+            </button>
+            <h3 class="text-3xl font-bold text-gray-900 mb-2">Building Management Systems (BMS) y Smart Buildings</h3>
+            <p class="text-gray-600 mb-6 text-lg">Convertimos inmuebles convencionales en <strong>Edificios Inteligentes</strong>. Un BMS (Sistema de Gestión de Edificios) es la plataforma central que monitorea y controla de manera unificada todos los subsistemas críticos, garantizando eficiencia energética, confort y seguridad operacional.</p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                <div>
+                    <h4 class="font-bold text-tam-blue mb-3 border-b pb-2">Subsistemas Integrados</h4>
+                    <ul class="space-y-2 text-gray-600 text-sm">
+                        <li><strong>• HVAC (Climatización):</strong> Control de chillers, manejadoras de aire (UMA), torres de enfriamiento y VAVs para confort térmico.</li>
+                        <li><strong>• Iluminación Inteligente:</strong> Control por horarios, presencia, dimerización y aprovechamiento de luz natural.</li>
+                        <li><strong>• Monitoreo Energético:</strong> Medición en tiempo real de consumos eléctricos, agua y gas para certificaciones LEED.</li>
+                        <li><strong>• Seguridad Física:</strong> Integración con control de accesos, CCTV y sistemas de detección y extinción de incendios.</li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold text-tam-blue mb-3 border-b pb-2">Arquitectura y Protocolos Abiertos</h4>
+                    <p class="text-gray-600 text-sm mb-3">Trabajamos con tecnologías agnósticas y protocolos de comunicación estándar en la industria para evitar el "vendor lock-in":</p>
+                    <ul class="space-y-2 text-gray-600 text-sm">
+                        <li><strong>• BACnet (IP / MS/TP):</strong> El estándar mundial para automatización de edificios.</li>
+                        <li><strong>• Modbus (RTU / TCP):</strong> Ideal para integración de medidores y variadores de frecuencia.</li>
+                        <li><strong>• LonWorks, KNX y DALI:</strong> Para sistemas de control de iluminación y periféricos.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h4 class="font-bold text-tam-blue mb-3">El Impacto en tu Operación:</h4>
+            <div class="flex flex-wrap gap-3">
+                <span class="bg-blue-50 text-tam-light px-3 py-1 rounded-full text-sm font-medium">Ahorros energéticos (15% - 30%)</span>
+                <span class="bg-blue-50 text-tam-light px-3 py-1 rounded-full text-sm font-medium">Alargamiento de vida útil de equipos</span>
+                <span class="bg-blue-50 text-tam-light px-3 py-1 rounded-full text-sm font-medium">Gestión remota multipantalla</span>
+                <span class="bg-blue-50 text-tam-light px-3 py-1 rounded-full text-sm font-medium">Mantenimiento basado en condiciones</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Industrial -->
+    <div id="modal-industrial" class="modal-container fixed inset-0 z-50 hidden flex items-center justify-center">
+        <div class="modal-overlay absolute inset-0 bg-black/60 backdrop-blur-sm cursor-pointer" onclick="closeModal('modal-industrial')"></div>
+        <div class="relative bg-white w-full max-w-4xl mx-4 rounded-2xl shadow-2xl p-8 transform transition-all max-h-[90vh] overflow-y-auto">
+            <button onclick="closeModal('modal-industrial')" class="absolute top-4 right-4 text-gray-400 hover:text-gray-800 focus:outline-none bg-gray-100 rounded-full p-1">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+            </button>
+            <h3 class="text-3xl font-bold text-gray-900 mb-2">Automatización Industrial e Industria 4.0</h3>
+            <p class="text-gray-600 mb-6 text-lg">Acompañamos a la industria manufacturera en su transición hacia la <strong>Fábrica Inteligente</strong>. Fusionamos el control de maquinaria tradicional con las tecnologías de la información (IIoT) para lograr visibilidad total, predicción de fallas y eficiencia sin precedentes.</p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                <div>
+                    <h4 class="font-bold text-tam-blue mb-3 border-b pb-2">Control en Piso de Planta (OT)</h4>
+                    <ul class="space-y-2 text-gray-600 text-sm">
+                        <li><strong>• Lógica de Control (PLC/PAC):</strong> Programación y migración de controladores lógicos programables de las principales marcas.</li>
+                        <li><strong>• Instrumentación y Sensores:</strong> Despliegue de sensórica inteligente (IO-Link) para variables críticas (presión, flujo, temperatura, vibración).</li>
+                        <li><strong>• Motion Control y Robótica:</strong> Integración de servomotores, variadores de frecuencia (VFD) y robótica colaborativa.</li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold text-tam-blue mb-3 border-b pb-2">Soluciones de Industria 4.0 (IT)</h4>
+                    <ul class="space-y-2 text-gray-600 text-sm">
+                        <li><strong>• IIoT (Industrial IoT):</strong> Conectividad de máquinas heredadas (legacy) hacia la nube o servidores locales usando MQTT y OPC-UA.</li>
+                        <li><strong>• Mantenimiento Predictivo:</strong> Análisis de vibraciones y consumo mediante machine learning para evitar paros no programados.</li>
+                        <li><strong>• Integración IT/OT:</strong> Conexión fluida entre la línea de producción y sus sistemas corporativos (ERP, SAP, MES).</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h4 class="font-bold text-tam-blue mb-3">Métricas que Mejoramos:</h4>
+            <div class="flex flex-wrap gap-3">
+                <span class="bg-green-50 text-green-700 px-3 py-1 rounded-full text-sm font-medium">Incremento de OEE (Eficiencia General)</span>
+                <span class="bg-green-50 text-green-700 px-3 py-1 rounded-full text-sm font-medium">Reducción de Tiempos Muertos</span>
+                <span class="bg-green-50 text-green-700 px-3 py-1 rounded-full text-sm font-medium">Trazabilidad Total de Lotes</span>
+                <span class="bg-green-50 text-green-700 px-3 py-1 rounded-full text-sm font-medium">Gemelos Digitales (Digital Twin)</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Software -->
+    <div id="modal-software" class="modal-container fixed inset-0 z-50 hidden flex items-center justify-center">
+        <div class="modal-overlay absolute inset-0 bg-black/60 backdrop-blur-sm cursor-pointer" onclick="closeModal('modal-software')"></div>
+        <div class="relative bg-white w-full max-w-4xl mx-4 rounded-2xl shadow-2xl p-8 transform transition-all max-h-[90vh] overflow-y-auto">
+            <button onclick="closeModal('modal-software')" class="absolute top-4 right-4 text-gray-400 hover:text-gray-800 focus:outline-none bg-gray-100 rounded-full p-1">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+            </button>
+            <h3 class="text-3xl font-bold text-gray-900 mb-2">Desarrollo de Software y SCADA a la Medida</h3>
+            <p class="text-gray-600 mb-6 text-lg">Comprendemos que no existen dos operaciones idénticas. Desarrollamos <strong>interfaces hombre-máquina (HMI), sistemas SCADA y plataformas web</strong> adaptadas exactamente a las necesidades de visualización y control de su empresa.</p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                <div>
+                    <h4 class="font-bold text-tam-blue mb-3 border-b pb-2">Sistemas de Visualización</h4>
+                    <ul class="space-y-2 text-gray-600 text-sm">
+                        <li><strong>• SCADA Avanzado:</strong> Interfaces gráficas intuitivas para el control supervisorio y adquisición de datos de grandes instalaciones.</li>
+                        <li><strong>• Dashboards Ejecutivos:</strong> Plataformas web responsivas para monitoreo de KPIs de producción en tiempo real, accesibles desde móviles.</li>
+                        <li><strong>• Gestión de Alarmas:</strong> Sistemas de notificación por SMS/Email ante eventos críticos o desvíos de parámetros.</li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold text-tam-blue mb-3 border-b pb-2">Manejo de Bases de Datos y Reportes</h4>
+                    <ul class="space-y-2 text-gray-600 text-sm">
+                        <li><strong>• Historiadores (Historians):</strong> Almacenamiento masivo de datos de series temporales para análisis forense de la producción.</li>
+                        <li><strong>• Reportes Automatizados:</strong> Generación de reportes de cumplimiento (FDA, auditorías energéticas, turnos de producción) en formatos PDF/Excel.</li>
+                        <li><strong>• Integración de APIs:</strong> Comunicación mediante RESTful APIs y WebSockets con software de terceros.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h4 class="font-bold text-tam-blue mb-3">Ventajas de nuestra solución de software:</h4>
+            <div class="flex flex-wrap gap-3">
+                <span class="bg-purple-50 text-purple-700 px-3 py-1 rounded-full text-sm font-medium">Código Propio y Escalable</span>
+                <span class="bg-purple-50 text-purple-700 px-3 py-1 rounded-full text-sm font-medium">Ciberseguridad Industrial</span>
+                <span class="bg-purple-50 text-purple-700 px-3 py-1 rounded-full text-sm font-medium">Independencia de Marcas Fijas</span>
+                <span class="bg-purple-50 text-purple-700 px-3 py-1 rounded-full text-sm font-medium">Bases de Datos SQL/NoSQL</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================== -->
+    <!-- SCRIPTS                                        -->
+    <!-- ============================================== -->
+    <script>
+        // Lógica de Modales
+        function openModal(modalId) {
+            document.getElementById(modalId).classList.remove('hidden');
+            document.body.classList.add('modal-open');
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.add('hidden');
+            document.body.classList.remove('modal-open');
+        }
+
+        // Mostrar Mensaje de Formulario (reemplazo de alert)
+        function showMessage(msg) {
+            const msgEl = document.getElementById('form-msg');
+            msgEl.textContent = msg;
+            msgEl.classList.remove('hidden');
+            setTimeout(() => {
+                msgEl.classList.add('hidden');
+            }, 4000);
+        }
+
+        // Lógica del Carrusel
+        let currentSlide = 0;
+        const track = document.getElementById('carousel-track');
+        const slides = document.querySelectorAll('.carousel-item');
+        const totalSlides = slides.length;
+        const indicators = document.querySelectorAll('.indicator-dot');
+
+        function updateCarousel() {
+            // Mover la pista
+            track.style.transform = `translateX(-${currentSlide * 100}%)`;
+            // Actualizar indicadores
+            indicators.forEach((dot, index) => {
+                if(index === currentSlide) {
+                    dot.classList.remove('bg-white/50');
+                    dot.classList.add('bg-white');
+                } else {
+                    dot.classList.remove('bg-white');
+                    dot.classList.add('bg-white/50');
+                }
+            });
+        }
+
+        function nextSlide() {
+            currentSlide = (currentSlide + 1) % totalSlides;
+            updateCarousel();
+        }
+
+        function prevSlide() {
+            currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+            updateCarousel();
+        }
+
+        function goToSlide(index) {
+            currentSlide = index;
+            updateCarousel();
+        }
+
+        // Opcional: Auto-reproducir carrusel cada 5 segundos
+        // setInterval(nextSlide, 5000);
+    </script>
+</body>
 </html>
