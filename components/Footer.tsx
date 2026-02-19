@@ -14,6 +14,9 @@ const Footer: React.FC = () => {
             </div>
             <p className="text-slate-400">Tecnologías Avanzadas de México</p>
             <p className="text-slate-400">Cuautitlán Izcalli, C.P. 54750, Estado de México, México.</p>
+            <p className="text-slate-400">+52 5632804027</p>
+            <p className="text-slate-400">+52 5624256004</p>
+            <p className="text-slate-400">+52 5532517422</p>
           </div>
           <div>
             <p className="font-semibold mb-4">Síganos en redes</p>
